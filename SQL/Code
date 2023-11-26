@@ -1,0 +1,88 @@
+# Dataset yang digunakan berasal dari BigQuery Public Data "thelook_ecommerce"
+
+No. 1
+Untuk meningkatkan kecepatan pengiriman di setiap kota, tim data diminta untuk menampilkan data jumlah order berdasarkan status, kota dan negara yang dituju. Tampilkan data tersebut berdasarkan tahun order dibuat dan tambahkan detail jumlah item yang dibeli. Instruksi: Gunakan table orders dan users untuk menyelesaikan kebutuhan tersebut!
+
+Query : 
+select distinct
+extract(year from orders.created_at) as tahun_order,
+orders.status,
+users.country,
+users.city,
+count(distinct orders.order_id) as jumlah_order,
+sum(orders.num_of_item) as jumlah_item_dibeli
+from bigquery-public-data.thelook_ecommerce.users as users
+left join bigquery-public-data.thelook_ecommerce.orders as orders
+on users.id = orders.user_id
+where extract(year from orders.created_at) is not null
+and orders.status  is not null
+and users.country  is not null
+and users.city  is not null
+group by 1,2,3,4
+order by 1,2,3,4
+
+No. 2	
+Untuk kebutuhan program membership, tim data diminta untuk mengeluarkan 20 user dengan total pengeluaran terbesar di tahun 2022 (Dengan ketentuan: order tersebut harus sudah selesai, dan terkirim sebelum Juni 2023). Instruksi: Gunakan table order_items dan users untuk menyelesaikan kebutuhan tersebut serta tampilkan rincian Nama Depan, Nama Belakang, Email, dan Asal Kota/Negara,dan total order! 
+
+Query : 
+select distinct
+users.first_name,
+users.last_name,
+users.email,
+users.country,
+users.city,
+extract(year from order_items.created_at) as tahun_order,
+order_items.status,
+count(distinct.order_items.order_id) as total_order,
+sum(order_items.sale_price) as total_pengeluaran
+from bigquery-public-data.thelook_ecommerce.users as users
+left join bigquery-public-data.thelook_ecommerce.order_items as   
+order_items
+on users.id = order_items.user_id
+where order_items.status = 'Complete'
+and date(order_items.shipped_at) < '2023-06-01'
+and extract(year from order_items.created_at) = 2022
+group by 1,2,3,4,5,6,7
+order by total_pengeluaran desc
+limit 20
+
+No. 3
+Pada sebuah e-commerce, ada brand yang melakukan kerjasama khusus yaitu Allegra K dan Calvin Klein. Dua brand ini ingin mengetahui performa mereka dalam setiap bulan selama tahun 2022. Tim data diminta untuk mengeluarkan data total order dan total harga/pendapatan dari 2 brand tersebut dan dilihat distribusi per kota dan negaranya. Instruksi: Gunakan table orders, users, order_items, products, untuk menyelesaikan kebutuhan tersebut! 
+
+Query Lengkap :
+select distinct
+products.brand,
+extract(month from orders.created_at) as bulan_order,
+users.country,
+users.city,
+count(orders.order_id) as total_order,
+sum(order_items.sale_price) as total_pendapatan,
+from bigquery-public-data.thelook_ecommerce.users as users
+left join bigquery-public-data.thelook_ecommerce.orders as orders
+on users.id = orders.user_id
+left join bigquery-public-data.thelook_ecommerce.order_items as order_items
+on orders.order_id = order_items.order_id
+left join bigquery-public-data.thelook_ecommerce.products as products
+on order_items.product_id = products.id
+where products.brand in ('Allegra K', 'Calvin Klein')
+and extract(year from orders.created_at) = 2022
+group by 1,2,3,4
+order by 1,2,3,4
+
+Query Hanya Total Order & Total Pendapatan : 
+select distinct
+products.brand,
+extract(month from orders.created_at) as bulan_order,
+count(orders.order_id) as total_order,
+sum(order_items.sale_price) as total_pendapatan,
+from bigquery-public-data.thelook_ecommerce.users as users
+left join bigquery-public-data.thelook_ecommerce.orders as orders
+on users.id = orders.user_id
+left join bigquery-public-data.thelook_ecommerce.order_items as order_items
+on orders.order_id = order_items.order_id
+left join bigquery-public-data.thelook_ecommerce.products as products
+on order_items.product_id = products.id
+where products.brand in ('Allegra K', 'Calvin Klein')
+and extract(year from orders.created_at) = 2022
+group by 1,2
+order by 1,2
