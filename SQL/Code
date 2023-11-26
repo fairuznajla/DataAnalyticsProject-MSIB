@@ -1,7 +1,9 @@
 # Dataset yang digunakan berasal dari BigQuery Public Data "thelook_ecommerce"
 
 No. 1
-Untuk meningkatkan kecepatan pengiriman di setiap kota, tim data diminta untuk menampilkan data jumlah order berdasarkan status, kota dan negara yang dituju. Tampilkan data tersebut berdasarkan tahun order dibuat dan tambahkan detail jumlah item yang dibeli. Instruksi: Gunakan table orders dan users untuk menyelesaikan kebutuhan tersebut!
+Untuk meningkatkan kecepatan pengiriman di setiap kota, tim data diminta untuk menampilkan data jumlah order berdasarkan 
+status, kota dan negara yang dituju. Tampilkan data tersebut berdasarkan tahun order dibuat dan tambahkan detail jumlah 
+item yang dibeli. Instruksi: Gunakan table orders dan users untuk menyelesaikan kebutuhan tersebut!
 
 Query : 
 select distinct
@@ -22,7 +24,10 @@ group by 1,2,3,4
 order by 1,2,3,4
 
 No. 2	
-Untuk kebutuhan program membership, tim data diminta untuk mengeluarkan 20 user dengan total pengeluaran terbesar di tahun 2022 (Dengan ketentuan: order tersebut harus sudah selesai, dan terkirim sebelum Juni 2023). Instruksi: Gunakan table order_items dan users untuk menyelesaikan kebutuhan tersebut serta tampilkan rincian Nama Depan, Nama Belakang, Email, dan Asal Kota/Negara,dan total order! 
+Untuk kebutuhan program membership, tim data diminta untuk mengeluarkan 20 user dengan total pengeluaran terbesar di 
+tahun 2022 (Dengan ketentuan: order tersebut harus sudah selesai, dan terkirim sebelum Juni 2023). Instruksi: Gunakan 
+table order_items dan users untuk menyelesaikan kebutuhan tersebut serta tampilkan rincian Nama Depan, Nama Belakang, 
+Email, dan Asal Kota/Negara,dan total order! 
 
 Query : 
 select distinct
@@ -47,7 +52,10 @@ order by total_pengeluaran desc
 limit 20
 
 No. 3
-Pada sebuah e-commerce, ada brand yang melakukan kerjasama khusus yaitu Allegra K dan Calvin Klein. Dua brand ini ingin mengetahui performa mereka dalam setiap bulan selama tahun 2022. Tim data diminta untuk mengeluarkan data total order dan total harga/pendapatan dari 2 brand tersebut dan dilihat distribusi per kota dan negaranya. Instruksi: Gunakan table orders, users, order_items, products, untuk menyelesaikan kebutuhan tersebut! 
+Pada sebuah e-commerce, ada brand yang melakukan kerjasama khusus yaitu Allegra K dan Calvin Klein. Dua brand ini ingin 
+mengetahui performa mereka dalam setiap bulan selama tahun 2022. Tim data diminta untuk mengeluarkan data total order dan 
+total harga/pendapatan dari 2 brand tersebut dan dilihat distribusi per kota dan negaranya. Instruksi: Gunakan table orders, 
+users, order_items, products, untuk menyelesaikan kebutuhan tersebut! 
 
 Query Lengkap :
 select distinct
